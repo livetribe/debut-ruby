@@ -2,7 +2,7 @@
 
 Register your cloud instance w/ DNS and other lookup services.
 
-[![Build Status](https://secure.travis-ci.org/maguro/debut.png?branch=master)](http://travis-ci.org/maguro/debut)
+[![Build Status](https://secure.travis-ci.org/livetribe/livetribe-debut.png?branch=master)](http://travis-ci.org/livetribe/livetribe-debut)
 [![Gem Version](https://fury-badge.herokuapp.com/rb/debut.png)](http://badge.fury.io/rb/debut)
 [![Dependency Status](https://gemnasium.com/livetribe/livetribe-debut.png)](https://gemnasium.com/livetribe/livetribe-debut)
 
