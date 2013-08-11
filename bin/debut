@@ -1,0 +1,86 @@
+#!/usr/bin/env ruby
+# Licensed to the Apache Software Foundation (ASF) under one or more
+# contributor license agreements.  See the NOTICE file distributed with
+# this work for additional information regarding copyright ownership.  The
+# ASF licenses this file to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance with the
+# License.  You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
+# License for the specific language governing permissions and limitations
+# under the License.
+
+require 'gli'
+
+begin # XXX: Remove this begin/rescue before distributing your app
+require 'debut'
+rescue LoadError
+  STDERR.puts 'In development, you need to use `bundle exec bin/debut` to run your app'
+  STDERR.puts 'At install-time, RubyGems will make sure lib, etc. are in the load path'
+  STDERR.puts 'Feel free to remove this message from bin/debut now'
+  exit 64
+end
+
+include GLI::App
+
+program_desc 'Register your cloud instance w/ DNS and other lookup services'
+
+version Debut::VERSION
+
+desc 'Use local hostname'
+switch [:l,:local], :default_value => LiveTribe::Debut::Debutante::USE_LOCAL_HOSTNAME
+
+desc 'The Fog provider'
+default_value 'aws'
+arg_name 'provider'
+flag [:p,:provider]
+
+desc 'The hostname of the cloud instance'
+default_value LiveTribe::Debut::Debutante::USE_ENVIRONMENT
+arg_name 'hostname'
+flag [:h,:hostname]
+
+desc 'The name of the cloud instance'
+default_value LiveTribe::Debut::Debutante::USE_ENVIRONMENT
+arg_name 'name'
+flag [:n,:name]
+
+desc 'The subdomain of the cloud instance'
+default_value LiveTribe::Debut::Debutante::USE_ENVIRONMENT
+arg_name 'subdomain'
+flag [:s,:subdomain]
+
+desc 'Announce the arrival of your cloud instance to the world'
+command :hello do |c|
+  c.action do |global_options, options, args|
+    provider = global_options[:provider]
+
+    debutant = LiveTribe::Debut::Debutante::new({:provider => provider})
+    debutant.hostname = global_options[:hostname]
+    debutant.name = global_options[:name]
+    debutant.subdomain = global_options[:subdomain]
+    debutant.use_local_hostname = global_options[:local]
+
+    debutant.hello
+  end
+end
+
+desc 'Announce the departure of your cloud instance to the world'
+command :goodbye do |c|
+  c.action do |global_options, options, args|
+    provider = global_options[:provider]
+
+    debutant = LiveTribe::Debut::Debutante::new({:provider => provider})
+    debutant.hostname = global_options[:hostname]
+    debutant.name = global_options[:name]
+    debutant.subdomain = global_options[:subdomain]
+
+    debutant.goodbye
+  end
+end
+
+exit run(ARGV)
