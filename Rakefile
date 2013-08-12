@@ -46,7 +46,7 @@ end
 
 GEM_NAME = "#{name}"
 task :default => :test
-task :travis  => ['test:travis', 'coveralls_push_workaround']
+task :travis  => ['test:travis']
 
 namespace :test do
   task :travis do
