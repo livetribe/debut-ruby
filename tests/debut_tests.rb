@@ -28,6 +28,14 @@ class TestDebut < MiniTest::Unit::TestCase
                                                     :aws_access_key_id => ENV['AWS_ACCESS_KEY'],
                                                     :aws_secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
                                                 })
+    debutant.hostname = 'ec2-184-72-8-21.us-west-1.compute.amazonaws.com'
+    debutant.subdomain = 'mock.livetribe.org.'
+    debutant.name = 'travis'
+
+    debutant.hello
+
+    debutant.goodbye
+
     assert debutant != nil
   end
 end
