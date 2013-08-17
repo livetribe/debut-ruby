@@ -46,41 +46,12 @@ end
 
 GEM_NAME = "#{name}"
 task :default => :test
-task :travis  => ['test:travis']
+task :travis  => %w(test:travis)
 
 namespace :test do
   task :travis do
       sh('bundle exec shindont')
   end
-end
-
-task :nuke do
-  LiveTribe::Debut.providers.each do |provider|
-    begin
-      compute = Fog::Compute.new(:provider => provider)
-      for server in compute.servers
-        Formatador.display_line("[#{provider}] destroying server #{server.identity}")
-        server.destroy rescue nil
-      end
-    rescue
-    end
-    begin
-      dns = Fog::DNS.new(:provider => provider)
-      for zone in dns.zones
-        for record in zone.records
-          record.destroy rescue nil
-        end
-        Formatador.display_line("[#{provider}] destroying zone #{zone.identity}")
-        zone.destroy rescue nil
-      end
-    rescue
-    end
-  end
-end
-
-desc "Open an irb session preloaded with this library"
-task :console do
-  sh "irb -rubygems -r ./lib/#{name}.rb"
 end
 
 #############################################################################
@@ -89,12 +60,12 @@ end
 #
 #############################################################################
 
-task :release => ["release:prepare", "release:publish"]
+task :release => %w(release:prepare release:publish)
 
 namespace :release do
   task :preflight do
     unless `git branch` =~ /^\* master$/
-      puts "You must be on the master branch to release!"
+      puts 'You must be on the master branch to release!'
       exit!
     end
     if `git tag` =~ /^\* v#{version}$/
@@ -121,7 +92,7 @@ task :git_mark_release do
 end
 
 task :git_push_release do
-  sh "git push origin master"
+  sh 'git push origin master'
   sh "git push origin v#{version}"
 end
 
@@ -129,9 +100,9 @@ task :gem_push do
   sh "gem push pkg/#{name}-#{version}.gem"
 end
 
-desc "Build fog-#{version}.gem"
+desc "Build debut-#{version}.gem"
 task :build => :gemspec do
-  sh "mkdir -p pkg"
+  sh 'mkdir -p pkg'
   sh "gem build #{gemspec_file}"
   sh "mv #{gem_file} pkg"
 end
@@ -153,15 +124,15 @@ task :gemspec => :validate do
   puts "Updated #{gemspec_file}"
 end
 
-desc "Run before pushing out the code"
+desc 'Run before pushing out the code'
 task :validate do
-  libfiles = Dir['lib/*'] - ["lib/#{name}.rb", "lib/#{name}", "lib/tasks"]
+  libfiles = Dir['lib/*'] - ["lib/#{name}.rb", "lib/#{name}"]
   unless libfiles.empty?
     puts "Directory `lib` should only contain a `#{name}.rb` file and `#{name}` dir."
     exit!
   end
   unless Dir['VERSION*'].empty?
-    puts "A `VERSION` file at root level violates Gem best practices."
+    puts 'A `VERSION` file at root level violates Gem best practices.'
     exit!
   end
 end
