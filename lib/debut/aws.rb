@@ -68,6 +68,8 @@ module LiveTribe
           if zone.domain == subdomain
             record = zone.records.find { |r| r.name == fqdn && r.type == 'CNAME' }
             if record
+              puts "Destroying old record for #{fqdn}"
+
               record.destroy
             end
 
