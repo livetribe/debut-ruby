@@ -13,10 +13,12 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
-require 'coveralls'
-Coveralls.wear!
+require_relative 'helper'
 
-Shindo.tests do
-  returns(true) { true }
-  returns(false) { false }
+require 'minitest/autorun'
+
+class TestDebut < MiniTest::Unit::TestCase
+  def test_that_namespace_defined
+    assert(defined?(LiveTribe::Debut))
+  end
 end

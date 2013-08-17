@@ -31,7 +31,7 @@ lib/debut.rb
   s.add_dependency('fog', '>=1')
   s.add_dependency('gli', '>=2.7')
 
-  s.add_development_dependency('shindo', '~>0.3.6')
+  s.add_development_dependency('minitest')
   s.add_development_dependency('rake')
 
 end

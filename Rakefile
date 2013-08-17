@@ -1,5 +1,6 @@
 require 'bundler/setup'
 require 'date'
+require 'rake/testtask'
 require 'rubygems'
 require 'rubygems/package_task'
 require File.dirname(__FILE__) + '/lib/debut'
@@ -46,12 +47,11 @@ end
 
 GEM_NAME = "#{name}"
 task :default => :test
-task :travis  => %w(test:travis)
 
-namespace :test do
-  task :travis do
-      sh('bundle exec shindont')
-  end
+Rake::TestTask.new do |t|
+  t.libs.push "lib"
+  t.test_files = FileList['tests/*_tests.rb']
+  t.verbose = true
 end
 
 #############################################################################

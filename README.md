@@ -20,7 +20,7 @@ Register your cloud instance w/ DNS and other lookup services.
   * Or anything else!
 * Fork the project and do your work in a topic branch.
   * Make sure your changes will work on both Ruby 1.8.7 and Ruby 1.9
-* Add shindo tests to prove your code works and run all the tests using `bundle exec rake`.
+* Add minitests tests to prove your code works and run all the tests using `bundle exec rake`.
 * Rebase your branch against `livetribe/livetribe-debut` to make sure everything is up to date.
 * Commit your changes and send a pull request.
 
