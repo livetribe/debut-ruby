@@ -21,4 +21,13 @@ class TestDebut < MiniTest::Unit::TestCase
   def test_that_namespace_defined
     assert(defined?(LiveTribe::Debut))
   end
+
+  def test_connection_to_test_aws
+    debutant = LiveTribe::Debut::Debutante::new({
+                                                    :provider => :aws,
+                                                    :aws_access_key_id => ENV['AWS_ACCESS_KEY'],
+                                                    :aws_secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
+                                                })
+    assert debutant != nil
+  end
 end
