@@ -15,6 +15,7 @@ Gem::Specification.new do |s|
 
   s.files       = %w(
 bin/debut
+lib/debut/aws.rb
 lib/debut/version.rb
 lib/debut.rb
                   )

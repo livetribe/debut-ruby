@@ -13,10 +13,15 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
-require 'coveralls'
-Coveralls.wear!
+require 'simplecov'
 
-Shindo.tests do
-  returns(true) { true }
-  returns(false) { false }
+if ENV['COVERAGE'] != 'false' && RUBY_VERSION != "1.9.2"
+  require 'coveralls'
+  SimpleCov.command_name "shindo:#{Process.pid.to_s}"
+  SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
+    SimpleCov::Formatter::HTMLFormatter,
+    Coveralls::SimpleCov::Formatter
+  ]
+  SimpleCov.merge_timeout 3600
+  SimpleCov.start
 end
