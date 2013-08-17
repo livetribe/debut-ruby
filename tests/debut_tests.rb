@@ -28,6 +28,8 @@ class TestDebut < MiniTest::Unit::TestCase
                                                     :aws_access_key_id => ENV['AWS_ACCESS_KEY'],
                                                     :aws_secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
                                                 })
+    refute_nil(debutant)
+
     debutant.hostname = 'ec2-184-72-8-21.us-west-1.compute.amazonaws.com'
     debutant.subdomain = 'mock.livetribe.org.'
     debutant.name = 'travis'
@@ -35,8 +37,30 @@ class TestDebut < MiniTest::Unit::TestCase
     debutant.hello
 
     debutant.goodbye
+  end
 
-    assert debutant != nil
+  def test_field_access
+    debutant = LiveTribe::Debut::Debutante::new({
+                                                    :provider => :aws,
+                                                    :aws_access_key_id => ENV['AWS_ACCESS_KEY'],
+                                                    :aws_secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
+                                                })
+    debutant.hostname = 'ec2-184-72-8-21.us-west-1.compute.amazonaws.com'
+    debutant.subdomain = 'mock.livetribe.org.'
+    debutant.name = 'travis'
+
+    assert_equal('ec2-184-72-8-21.us-west-1.compute.amazonaws.com', debutant.hostname)
+    assert_equal('mock.livetribe.org.', debutant.subdomain)
+    assert_equal('travis', debutant.name)
+    assert_equal(LiveTribe::Debut::Debutante::USE_LOCAL_HOSTNAME, debutant.use_local_hostname)
+
+    debutant.use_local_hostname = !LiveTribe::Debut::Debutante::USE_LOCAL_HOSTNAME
+
+    assert_equal(!LiveTribe::Debut::Debutante::USE_LOCAL_HOSTNAME, debutant.use_local_hostname)
+
+    assert_equal('travis.mock.livetribe.org.:aws', debutant.to_s)
+
+    refute_empty(LiveTribe::Debut.providers)
   end
 
   def test_bad_provider
