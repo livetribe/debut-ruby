@@ -38,4 +38,12 @@ class TestDebut < MiniTest::Unit::TestCase
 
     assert debutant != nil
   end
+
+  def test_bad_provider
+    assert_raises(ArgumentError) {
+      debutant = LiveTribe::Debut::Debutante::new({
+                                                      :provider => :goofus
+                                                  })
+    }
+  end
 end
