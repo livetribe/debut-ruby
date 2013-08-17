@@ -5,6 +5,7 @@ Register your cloud instance w/ DNS and other lookup services.
 [![Build Status](https://secure.travis-ci.org/livetribe/livetribe-debut.png?branch=master)](http://travis-ci.org/livetribe/livetribe-debut)
 [![Gem Version](https://fury-badge.herokuapp.com/rb/debut.png)](http://badge.fury.io/rb/debut)
 [![Dependency Status](https://gemnasium.com/livetribe/livetribe-debut.png)](https://gemnasium.com/livetribe/livetribe-debut)
+[![Code Climate](https://codeclimate.com/github/livetribe/livetribe-debut.png)](https://codeclimate.com/github/livetribe/livetribe-debut)
 [![Coverage Status](https://coveralls.io/repos/livetribe/livetribe-debut/badge.png)](https://coveralls.io/r/livetribe/livetribe-debut)
 
 ## Getting Started
