@@ -25,11 +25,14 @@ module LiveTribe
 
       def initialize(attributes)
         provider = attributes[:provider].to_s.downcase.to_sym
-
-        require "debut/#{provider}"
-        if LiveTribe::Debut.providers.include?(provider)
-          @provider = LiveTribe::Debut.providers[provider].new(attributes)
-        else
+        begin
+          require "debut/#{provider}"
+          if LiveTribe::Debut.providers.include?(provider)
+            @provider = LiveTribe::Debut.providers[provider].new(attributes)
+          else
+            raise ArgumentError.new("#{provider} is not a recognized debut provider")
+          end
+        rescue LoadError
           raise ArgumentError.new("#{provider} is not a recognized debut provider")
         end
 
