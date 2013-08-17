@@ -22,3 +22,8 @@ notifications:
     on_success: always
     on_failure: always
     use_notice: false
+
+env:
+  global:
+    - secure: JFBuVOIPuS8hF6jSrAg4TO6amiYFTh6pPNyJHZ2pN6uwoW1foS3duFtO22B/jtHidB8XqIv/V0OQIf8KQTAiBC/w5oM9RtIUrex1JUn126XXmaiEVlIfivu9Iy8VAtKzy3EG2Cd99Pzoav+ZNVEtZJP8vsFwwfuqCyhABu04Ihs=
+    - secure: G9JIMEXqc/eK2FAxI5heKdMt9RUMGhtVfhOfklFr1T/Ejx4cvl8R1gXFWlVP636f2CbVkrVD1xGKlgxKKJCQr9iE5vy/paF019C6YhoTVQ5XHL1HohiY5hKDGitoRAsOH3uKMPHS/P6mPX3KHQpepy9Q8a6iYLeUneEaYVKE3cM=
