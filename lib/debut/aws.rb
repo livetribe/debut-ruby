@@ -60,6 +60,10 @@ module LiveTribe
         @use_local_hostname = use_local_hostname
       end
 
+      def to_s
+        'aws'
+      end
+
       def hello
         name, subdomain = collect_name_and_subdomain
         hostname = collect_hostname

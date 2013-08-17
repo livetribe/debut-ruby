@@ -84,7 +84,7 @@ module LiveTribe
       end
 
       def to_s
-        "#{@hostname}.#{@subdomain}:#{@provider.to_s}"
+        "#{@name}.#{@subdomain}:#{@provider.to_s}"
       end
     end
 
