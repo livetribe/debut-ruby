@@ -77,9 +77,14 @@ class TestDebut < MiniTest::Unit::TestCase
       LiveTribe::Debut::Debutante::new({:provider => :goofus})
     }
 
-    assert_raises(ArgumentError) {
-      LiveTribe::Debut::Debutante::new({:provider => :broken})
-    }
+    begin
+      $LOAD_PATH.unshift File.dirname(__FILE__)
+      assert_raises(ArgumentError) {
+        LiveTribe::Debut::Debutante::new({:provider => :broken})
+      }
+    ensure
+      $LOAD_PATH.shift
+    end
   end
 
   def test_bad_zone
