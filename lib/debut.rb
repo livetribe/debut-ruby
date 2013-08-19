@@ -36,42 +36,38 @@ module LiveTribe
           raise ArgumentError.new("#{provider} is not a recognized debut provider")
         end
 
-        @use_local_hostname = USE_LOCAL_HOSTNAME
+        @provider.use_local_hostname = USE_LOCAL_HOSTNAME
       end
 
       def hostname
-        @hostname
+        @provider.hostname
       end
 
       def hostname=(hostname)
-        @hostname = hostname
         @provider.hostname = hostname
       end
 
       def name
-        @name
+        @provider.name
       end
 
       def name=(name)
-        @name = name
         @provider.name = name
       end
 
       def subdomain
-        @subdomain
+        @provider.subdomain
       end
 
       def subdomain=(subdomain)
-        @subdomain = subdomain
         @provider.subdomain = subdomain
       end
 
       def use_local_hostname
-        @use_local_hostname
+        @provider.use_local_hostname
       end
 
       def use_local_hostname=(use_local_hostname)
-        @use_local_hostname = use_local_hostname
         @provider.use_local_hostname = use_local_hostname
       end
 
@@ -84,7 +80,7 @@ module LiveTribe
       end
 
       def to_s
-        "#{@name}.#{@subdomain}:#{@provider.to_s}"
+        "#{@provider.name}.#{@provider.subdomain}:#{@provider.to_s}"
       end
     end
 
