@@ -21,6 +21,18 @@ require 'debut/aws'
 
 
 class TestAws < MiniTest::Unit::TestCase
+  def test_defaults
+    aws = LiveTribe::Debut::AWS::new({:provider => :aws,
+                                      :aws_access_key_id => ENV['AWS_ACCESS_KEY'],
+                                      :aws_secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']})
+    assert_equal(LiveTribe::Debut::Debutante::USE_ENVIRONMENT, aws.hostname)
+    assert_equal(LiveTribe::Debut::Debutante::USE_ENVIRONMENT, aws.name)
+    assert_equal(LiveTribe::Debut::Debutante::USE_ENVIRONMENT, aws.subdomain)
+    assert_equal(LiveTribe::Debut::Debutante::USE_LOCAL_HOSTNAME, aws.use_local_hostname)
+
+    assert_equal('aws', aws.to_s)
+  end
+
   def test_field_access
     aws = LiveTribe::Debut::AWS::new({:provider => :aws,
                                       :aws_access_key_id => ENV['AWS_ACCESS_KEY'],

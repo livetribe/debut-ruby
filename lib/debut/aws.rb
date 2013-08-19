@@ -26,6 +26,11 @@ module LiveTribe
 
       def initialize(attributes)
         @dns = Fog::DNS.new(attributes)
+
+        @hostname = LiveTribe::Debut::Debutante::USE_ENVIRONMENT
+        @name = LiveTribe::Debut::Debutante::USE_ENVIRONMENT
+        @subdomain = LiveTribe::Debut::Debutante::USE_ENVIRONMENT
+        @use_local_hostname = LiveTribe::Debut::Debutante::USE_LOCAL_HOSTNAME
       end
 
       def hostname
