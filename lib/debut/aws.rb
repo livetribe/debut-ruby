@@ -83,7 +83,7 @@ module LiveTribe
                 :type => 'CNAME'
             )
 
-            puts "Registered #{fqdn}"
+            puts "Registered hostname #{hostname} at #{fqdn}"
 
             return
           end
