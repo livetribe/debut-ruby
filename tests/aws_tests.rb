@@ -21,6 +21,17 @@ require 'debut/aws'
 
 
 class TestAws < MiniTest::Unit::TestCase
+
+  def setup
+    @old_mock_value = Excon.defaults[:mock]
+    Excon.stubs.clear
+  end
+
+  def teardown
+    Excon.stubs.clear
+    Excon.defaults[:mock] = @old_mock_value
+  end
+
   def test_defaults
     aws = LiveTribe::Debut::AWS::new({:provider => :aws,
                                       :aws_access_key_id => ENV['AWS_ACCESS_KEY'],
@@ -53,131 +64,91 @@ class TestAws < MiniTest::Unit::TestCase
   end
 
   def test_name_and_subdomain
-    old_mock_value = Excon.defaults[:mock]
-    Excon.stubs.clear
+    Excon.defaults[:mock] = true
 
-    begin
-      Excon.defaults[:mock] = true
+    aws = LiveTribe::Debut::AWS::new({:provider => :aws,
+                                      :aws_access_key_id => ENV['AWS_ACCESS_KEY'],
+                                      :aws_secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']})
+    aws.name = LiveTribe::Debut::Debutante::USE_ENVIRONMENT
+    aws.subdomain = LiveTribe::Debut::Debutante::USE_ENVIRONMENT
 
-      aws = LiveTribe::Debut::AWS::new({:provider => :aws,
-                                        :aws_access_key_id => ENV['AWS_ACCESS_KEY'],
-                                        :aws_secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']})
-      aws.name = LiveTribe::Debut::Debutante::USE_ENVIRONMENT
-      aws.subdomain = LiveTribe::Debut::Debutante::USE_ENVIRONMENT
+    user_data = {
+        :name => 'test_name',
+        :subdomain => 'test_subdomain'
+    }
+    Excon.stub({:method => :get, :path => '/latest/user-data'}, {:status => 200, :body => Fog::JSON.encode(user_data)})
 
-      user_data = {
-          :name => 'test_name',
-          :subdomain => 'test_subdomain'
-      }
-      Excon.stub({:method => :get, :path => '/latest/user-data'}, {:status => 200, :body => Fog::JSON.encode(user_data)})
+    name, subdomain = aws.send :collect_name_and_subdomain
 
-      name, subdomain = aws.send :collect_name_and_subdomain
-
-      assert_equal('test_name', name)
-      assert_equal('test_subdomain', subdomain)
-    ensure
-      Excon.stubs.clear
-      Excon.defaults[:mock] = old_mock_value
-    end
+    assert_equal('test_name', name)
+    assert_equal('test_subdomain', subdomain)
   end
 
   def test_missing_name
-    old_mock_value = Excon.defaults[:mock]
-    Excon.stubs.clear
+    Excon.defaults[:mock] = true
 
-    begin
-      Excon.defaults[:mock] = true
+    aws = LiveTribe::Debut::AWS::new({:provider => :aws,
+                                      :aws_access_key_id => ENV['AWS_ACCESS_KEY'],
+                                      :aws_secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']})
+    aws.name = LiveTribe::Debut::Debutante::USE_ENVIRONMENT
+    aws.subdomain = LiveTribe::Debut::Debutante::USE_ENVIRONMENT
 
-      aws = LiveTribe::Debut::AWS::new({:provider => :aws,
-                                        :aws_access_key_id => ENV['AWS_ACCESS_KEY'],
-                                        :aws_secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']})
-      aws.name = LiveTribe::Debut::Debutante::USE_ENVIRONMENT
-      aws.subdomain = LiveTribe::Debut::Debutante::USE_ENVIRONMENT
+    user_data = {:subdomain => 'test_subdomain'}
+    Excon.stub({:method => :get, :path => '/latest/user-data'}, {:status => 200, :body => Fog::JSON.encode(user_data)})
 
-      user_data = {:subdomain => 'test_subdomain'}
-      Excon.stub({:method => :get, :path => '/latest/user-data'}, {:status => 200, :body => Fog::JSON.encode(user_data)})
-
-      assert_raises(ArgumentError) {
-        aws.send :collect_name_and_subdomain
-      }
-    ensure
-      Excon.stubs.clear
-      Excon.defaults[:mock] = old_mock_value
-    end
+    assert_raises(ArgumentError) {
+      aws.send :collect_name_and_subdomain
+    }
   end
 
   def test_missing_subdomain
-    old_mock_value = Excon.defaults[:mock]
-    Excon.stubs.clear
+    Excon.defaults[:mock] = true
 
-    begin
-      Excon.defaults[:mock] = true
+    aws = LiveTribe::Debut::AWS::new({:provider => :aws,
+                                      :aws_access_key_id => ENV['AWS_ACCESS_KEY'],
+                                      :aws_secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']})
+    aws.name = LiveTribe::Debut::Debutante::USE_ENVIRONMENT
+    aws.subdomain = LiveTribe::Debut::Debutante::USE_ENVIRONMENT
 
-      aws = LiveTribe::Debut::AWS::new({:provider => :aws,
-                                        :aws_access_key_id => ENV['AWS_ACCESS_KEY'],
-                                        :aws_secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']})
-      aws.name = LiveTribe::Debut::Debutante::USE_ENVIRONMENT
-      aws.subdomain = LiveTribe::Debut::Debutante::USE_ENVIRONMENT
+    user_data = {:name => 'test_name'}
+    Excon.stub({:method => :get, :path => '/latest/user-data'}, {:status => 200, :body => Fog::JSON.encode(user_data)})
 
-      user_data = {:name => 'test_name'}
-      Excon.stub({:method => :get, :path => '/latest/user-data'}, {:status => 200, :body => Fog::JSON.encode(user_data)})
-
-      assert_raises(ArgumentError) {
-        aws.send :collect_name_and_subdomain
-      }
-    ensure
-      Excon.stubs.clear
-      Excon.defaults[:mock] = old_mock_value
-    end
+    assert_raises(ArgumentError) {
+      aws.send :collect_name_and_subdomain
+    }
   end
 
   def test_public_public_hostname
-    old_mock_value = Excon.defaults[:mock]
-    Excon.stubs.clear
+    Excon.defaults[:mock] = true
 
-    begin
-      Excon.defaults[:mock] = true
+    aws = LiveTribe::Debut::AWS::new({:provider => :aws,
+                                      :aws_access_key_id => ENV['AWS_ACCESS_KEY'],
+                                      :aws_secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']})
+    aws.hostname = LiveTribe::Debut::Debutante::USE_ENVIRONMENT
+    aws.use_local_hostname = false
 
-      aws = LiveTribe::Debut::AWS::new({:provider => :aws,
-                                        :aws_access_key_id => ENV['AWS_ACCESS_KEY'],
-                                        :aws_secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']})
-      aws.hostname = LiveTribe::Debut::Debutante::USE_ENVIRONMENT
-      aws.use_local_hostname = false
+    meta_data = {:hostname => 'public_hostname'}
+    Excon.stub({:method => :get, :path => '/latest/meta-data/public-hostname'}, {:status => 200, :body => Fog::JSON.encode(meta_data)})
 
-      meta_data = {:hostname => 'public_hostname'}
-      Excon.stub({:method => :get, :path => '/latest/meta-data/public-hostname'}, {:status => 200, :body => Fog::JSON.encode(meta_data)})
+    hostname = aws.send :collect_hostname
 
-      hostname = aws.send :collect_hostname
-
-      assert_equal('public_hostname', hostname)
-    ensure
-      Excon.stubs.clear
-      Excon.defaults[:mock] = old_mock_value
-    end
+    assert_equal('public_hostname', hostname)
   end
 
   def test_public_local_hostname
-    old_mock_value = Excon.defaults[:mock]
-    Excon.stubs.clear
+    Excon.defaults[:mock] = true
 
-    begin
-      Excon.defaults[:mock] = true
+    aws = LiveTribe::Debut::AWS::new({:provider => :aws,
+                                      :aws_access_key_id => ENV['AWS_ACCESS_KEY'],
+                                      :aws_secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']})
+    aws.hostname = LiveTribe::Debut::Debutante::USE_ENVIRONMENT
+    aws.use_local_hostname = true
 
-      aws = LiveTribe::Debut::AWS::new({:provider => :aws,
-                                        :aws_access_key_id => ENV['AWS_ACCESS_KEY'],
-                                        :aws_secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']})
-      aws.hostname = LiveTribe::Debut::Debutante::USE_ENVIRONMENT
-      aws.use_local_hostname = true
+    meta_data = {:hostname => 'local_hostname'}
+    Excon.stub({:method => :get, :path => '/latest/meta-data/local-hostname'}, {:status => 200, :body => Fog::JSON.encode(meta_data)})
 
-      meta_data = {:hostname => 'local_hostname'}
-      Excon.stub({:method => :get, :path => '/latest/meta-data/local-hostname'}, {:status => 200, :body => Fog::JSON.encode(meta_data)})
+    hostname = aws.send :collect_hostname
 
-      hostname = aws.send :collect_hostname
-
-      assert_equal('local_hostname', hostname)
-    ensure
-      Excon.stubs.clear
-      Excon.defaults[:mock] = old_mock_value
-    end
+    assert_equal('local_hostname', hostname)
   end
 end
