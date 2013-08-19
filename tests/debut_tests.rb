@@ -61,16 +61,6 @@ class TestDebut < MiniTest::Unit::TestCase
     assert_equal('travis.mock.livetribe.org.:aws', debutant.to_s)
 
     refute_empty(LiveTribe::Debut.providers)
-<<<<<<< HEAD
-  end
-
-  def test_bad_provider
-    assert_raises(ArgumentError) {
-      debutant = LiveTribe::Debut::Debutante::new({
-                                                      :provider => :goofus
-                                                  })
-    }
-=======
 
     saved_providers = LiveTribe::Debut.providers
 
@@ -79,20 +69,16 @@ class TestDebut < MiniTest::Unit::TestCase
     assert_same(test_providers, LiveTribe::Debut.providers)
 
     LiveTribe::Debut.providers = saved_providers
->>>>>>> 982e6556ed8f29195591115f32a60123feb2e2dc
+
   end
 
   def test_bad_provider
     assert_raises(ArgumentError) {
-      debutant = LiveTribe::Debut::Debutante::new({
-                                                      :provider => :goofus
-                                                  })
+      LiveTribe::Debut::Debutante::new({:provider => :goofus})
     }
 
     assert_raises(ArgumentError) {
-      debutant = LiveTribe::Debut::Debutante::new({
-                                                      :provider => :broken
-                                                  })
+      LiveTribe::Debut::Debutante::new({:provider => :broken})
     }
   end
 
