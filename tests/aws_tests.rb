@@ -54,10 +54,10 @@ class TestAws < MiniTest::Unit::TestCase
       aws.subdomain = LiveTribe::Debut::Debutante::USE_ENVIRONMENT
 
       user_data = {
-          'name' => 'test_name',
-          'subdomain' => 'test_subdomain'
+          :name => 'test_name',
+          :subdomain => 'test_subdomain'
       }
-      Excon.stub({:method => :get, :path => "/latest/user-data"}, {:status => 200, :body => Fog::JSON.encode(user_data)})
+      Excon.stub({:method => :get, :path => '/latest/user-data'}, {:status => 200, :body => Fog::JSON.encode(user_data)})
 
       name, subdomain = aws.send :collect_name_and_subdomain
 
@@ -82,8 +82,8 @@ class TestAws < MiniTest::Unit::TestCase
       aws.name = LiveTribe::Debut::Debutante::USE_ENVIRONMENT
       aws.subdomain = LiveTribe::Debut::Debutante::USE_ENVIRONMENT
 
-      user_data = {'subdomain' => 'test_subdomain'}
-      Excon.stub({:method => :get, :path => "/latest/user-data"}, {:status => 200, :body => Fog::JSON.encode(user_data)})
+      user_data = {:subdomain => 'test_subdomain'}
+      Excon.stub({:method => :get, :path => '/latest/user-data'}, {:status => 200, :body => Fog::JSON.encode(user_data)})
 
       assert_raises(ArgumentError) {
         aws.send :collect_name_and_subdomain
@@ -107,8 +107,8 @@ class TestAws < MiniTest::Unit::TestCase
       aws.name = LiveTribe::Debut::Debutante::USE_ENVIRONMENT
       aws.subdomain = LiveTribe::Debut::Debutante::USE_ENVIRONMENT
 
-      user_data = {'name' => 'test_name'}
-      Excon.stub({:method => :get, :path => "/latest/user-data"}, {:status => 200, :body => Fog::JSON.encode(user_data)})
+      user_data = {:name => 'test_name'}
+      Excon.stub({:method => :get, :path => '/latest/user-data'}, {:status => 200, :body => Fog::JSON.encode(user_data)})
 
       assert_raises(ArgumentError) {
         aws.send :collect_name_and_subdomain
@@ -132,8 +132,8 @@ class TestAws < MiniTest::Unit::TestCase
       aws.hostname = LiveTribe::Debut::Debutante::USE_ENVIRONMENT
       aws.use_local_hostname = false
 
-      meta_data = {'hostname' => 'public_hostname'}
-      Excon.stub({:method => :get, :path => "/latest/meta-data/public-hostname"}, {:status => 200, :body => Fog::JSON.encode(meta_data)})
+      meta_data = {:hostname => 'public_hostname'}
+      Excon.stub({:method => :get, :path => '/latest/meta-data/public-hostname'}, {:status => 200, :body => Fog::JSON.encode(meta_data)})
 
       hostname = aws.send :collect_hostname
 
@@ -157,8 +157,8 @@ class TestAws < MiniTest::Unit::TestCase
       aws.hostname = LiveTribe::Debut::Debutante::USE_ENVIRONMENT
       aws.use_local_hostname = true
 
-      meta_data = {'hostname' => 'local_hostname'}
-      Excon.stub({:method => :get, :path => "/latest/meta-data/local-hostname"}, {:status => 200, :body => Fog::JSON.encode(meta_data)})
+      meta_data = {:hostname => 'local_hostname'}
+      Excon.stub({:method => :get, :path => '/latest/meta-data/local-hostname'}, {:status => 200, :body => Fog::JSON.encode(meta_data)})
 
       hostname = aws.send :collect_hostname
 
