@@ -16,9 +16,9 @@
 module LiveTribe
   module Debut
     INSTANCE_METADATA_HOST = 'http://169.254.169.254'
-    INSTANCE_METADATA_PATH = 'latest/user-data/'
-    INSTANCE_LOCAL_HOSTNAME_PATH = 'latest/meta-data/local-hostname/'
-    INSTANCE_PUBLIC_HOSTNAME_PATH = 'latest/meta-data/public-hostname/'
+    INSTANCE_METADATA_PATH = '/latest/user-data'
+    INSTANCE_LOCAL_HOSTNAME_PATH = '/latest/meta-data/local-hostname'
+    INSTANCE_PUBLIC_HOSTNAME_PATH = '/latest/meta-data/public-hostname'
 
     class AWS < LiveTribe::Debut::Provider
       require 'json'
@@ -117,7 +117,7 @@ module LiveTribe
 
         if name == LiveTribe::Debut::Debutante::USE_ENVIRONMENT || subdomain == LiveTribe::Debut::Debutante::USE_ENVIRONMENT
           connection = Excon.new(INSTANCE_METADATA_HOST)
-          metadata = JSON.parse string(connection.get(:path => INSTANCE_METADATA_PATH, :expects => 200).body)
+          metadata = Fog::JSON.decode(connection.get(:path => INSTANCE_METADATA_PATH, :expects => 200).body)
           metadata.default = LiveTribe::Debut::Debutante::USE_ENVIRONMENT
 
           if name == LiveTribe::Debut::Debutante::USE_ENVIRONMENT
@@ -148,14 +148,9 @@ module LiveTribe
             path = INSTANCE_PUBLIC_HOSTNAME_PATH
           end
 
-          metadata = JSON.parse string(connection.get(:path => path, :expects => 200).body)
-          metadata.default = LiveTribe::Debut::Debutante::USE_ENVIRONMENT
+          metadata = Fog::JSON.decode(connection.get(:path => path, :expects => 200).body)
 
           hostname = metadata['hostname']
-        end
-
-        if hostname == LiveTribe::Debut::Debutante::USE_ENVIRONMENT
-          raise ArgumentError.new("Hostname not set: #{hostname}")
         end
 
         hostname
