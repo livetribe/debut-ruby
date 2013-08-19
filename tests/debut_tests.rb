@@ -61,6 +61,7 @@ class TestDebut < MiniTest::Unit::TestCase
     assert_equal('travis.mock.livetribe.org.:aws', debutant.to_s)
 
     refute_empty(LiveTribe::Debut.providers)
+<<<<<<< HEAD
   end
 
   def test_bad_provider
@@ -69,5 +70,51 @@ class TestDebut < MiniTest::Unit::TestCase
                                                       :provider => :goofus
                                                   })
     }
+=======
+
+    saved_providers = LiveTribe::Debut.providers
+
+    test_providers = {:goofus => Object}
+    LiveTribe::Debut.providers = test_providers
+    assert_same(test_providers, LiveTribe::Debut.providers)
+
+    LiveTribe::Debut.providers = saved_providers
+>>>>>>> 982e6556ed8f29195591115f32a60123feb2e2dc
   end
+
+  def test_bad_provider
+    assert_raises(ArgumentError) {
+      debutant = LiveTribe::Debut::Debutante::new({
+                                                      :provider => :goofus
+                                                  })
+    }
+
+    assert_raises(ArgumentError) {
+      debutant = LiveTribe::Debut::Debutante::new({
+                                                      :provider => :broken
+                                                  })
+    }
+  end
+
+  def test_bad_zone
+    debutant = LiveTribe::Debut::Debutante::new({
+                                                    :provider => :aws,
+                                                    :aws_access_key_id => ENV['AWS_ACCESS_KEY'],
+                                                    :aws_secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
+                                                })
+    refute_nil(debutant)
+
+    debutant.hostname = 'ec2-184-72-8-21.us-west-1.compute.amazonaws.com'
+    debutant.subdomain = 'goofus.org.'
+    debutant.name = 'travis'
+
+    assert_raises(ArgumentError) {
+      debutant.hello
+    }
+
+    assert_raises(ArgumentError) {
+      debutant.goodbye
+    }
+  end
+
 end
