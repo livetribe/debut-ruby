@@ -22,7 +22,9 @@ require 'debut/aws'
 
 class TestAws < MiniTest::Unit::TestCase
   def test_field_access
-    aws = LiveTribe::Debut::AWS::new({:provider => :aws})
+    aws = LiveTribe::Debut::AWS::new({:provider => :aws,
+                                      :aws_access_key_id => ENV['AWS_ACCESS_KEY'],
+                                      :aws_secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']})
     aws.hostname = 'ec2-184-72-8-21.us-west-1.compute.amazonaws.com'
     assert_equal('ec2-184-72-8-21.us-west-1.compute.amazonaws.com', aws.hostname)
 
@@ -45,7 +47,9 @@ class TestAws < MiniTest::Unit::TestCase
     begin
       Excon.defaults[:mock] = true
 
-      aws = LiveTribe::Debut::AWS::new({:provider => :aws})
+      aws = LiveTribe::Debut::AWS::new({:provider => :aws,
+                                        :aws_access_key_id => ENV['AWS_ACCESS_KEY'],
+                                        :aws_secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']})
       aws.name = LiveTribe::Debut::Debutante::USE_ENVIRONMENT
       aws.subdomain = LiveTribe::Debut::Debutante::USE_ENVIRONMENT
 
@@ -72,7 +76,9 @@ class TestAws < MiniTest::Unit::TestCase
     begin
       Excon.defaults[:mock] = true
 
-      aws = LiveTribe::Debut::AWS::new({:provider => :aws})
+      aws = LiveTribe::Debut::AWS::new({:provider => :aws,
+                                        :aws_access_key_id => ENV['AWS_ACCESS_KEY'],
+                                        :aws_secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']})
       aws.name = LiveTribe::Debut::Debutante::USE_ENVIRONMENT
       aws.subdomain = LiveTribe::Debut::Debutante::USE_ENVIRONMENT
 
@@ -95,7 +101,9 @@ class TestAws < MiniTest::Unit::TestCase
     begin
       Excon.defaults[:mock] = true
 
-      aws = LiveTribe::Debut::AWS::new({:provider => :aws})
+      aws = LiveTribe::Debut::AWS::new({:provider => :aws,
+                                        :aws_access_key_id => ENV['AWS_ACCESS_KEY'],
+                                        :aws_secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']})
       aws.name = LiveTribe::Debut::Debutante::USE_ENVIRONMENT
       aws.subdomain = LiveTribe::Debut::Debutante::USE_ENVIRONMENT
 
@@ -118,7 +126,9 @@ class TestAws < MiniTest::Unit::TestCase
     begin
       Excon.defaults[:mock] = true
 
-      aws = LiveTribe::Debut::AWS::new({:provider => :aws})
+      aws = LiveTribe::Debut::AWS::new({:provider => :aws,
+                                        :aws_access_key_id => ENV['AWS_ACCESS_KEY'],
+                                        :aws_secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']})
       aws.hostname = LiveTribe::Debut::Debutante::USE_ENVIRONMENT
       aws.use_local_hostname = false
 
@@ -141,7 +151,9 @@ class TestAws < MiniTest::Unit::TestCase
     begin
       Excon.defaults[:mock] = true
 
-      aws = LiveTribe::Debut::AWS::new({:provider => :aws})
+      aws = LiveTribe::Debut::AWS::new({:provider => :aws,
+                                        :aws_access_key_id => ENV['AWS_ACCESS_KEY'],
+                                        :aws_secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']})
       aws.hostname = LiveTribe::Debut::Debutante::USE_ENVIRONMENT
       aws.use_local_hostname = true
 
