@@ -18,15 +18,6 @@
 
 require 'gli'
 
-begin # XXX: Remove this begin/rescue before distributing your app
-require 'debut'
-rescue LoadError
-  STDERR.puts 'In development, you need to use `bundle exec bin/debut` to run your app'
-  STDERR.puts 'At install-time, RubyGems will make sure lib, etc. are in the load path'
-  STDERR.puts 'Feel free to remove this message from bin/debut now'
-  exit 64
-end
-
 include GLI::App
 
 program_desc 'Register your cloud instance w/ DNS and other lookup services'
