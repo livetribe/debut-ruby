@@ -10,9 +10,77 @@ LiveTribe Debut
 
 Register your cloud instance w/ DNS and other lookup services.
 
+## About
+
+LiveTribe's `debut` command can be used to register your cloud instance with a
+DNS service, e.g. Amazon Route 53.  It can also be used to unregister your
+cloud instance as well.
+
+The `debut` command allows for the addition of providers which allow the
+`debut` command to interface with different DNS providers.  At the moment
+there is only one Amazon Route 53 provider.  Come join the fun and add one!
+
 ## Getting Started
 
     sudo gem install debut
+
+Now, after
+[setting up your Fog credentials]http://fog.io/about/getting_started.html#credentials "Setting up your Fog credentials"),
+you are ready to introduce your cloud instance:
+
+    $ debut -h ec2-164-62-8-61.us-west-1.compute.amazonaws.com -s mock.livetribe.org. -n travis hello
+    Registered hostname ec2-164-62-8-61.us-west-1.compute.amazonaws.com at travis.mock.livetribe.org.
+    $ debut -h ec2-164-62-8-61.us-west-1.compute.amazonaws.com -s mock.livetribe.org. -n travis goodbye
+    Unregistered travis.mock.livetribe.org.
+
+If the hostname, sub-domain, and name are not specified, the `aws` provider
+will attempt obtain the information from the
+[user data of the meta-data service](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AESDG-chapter-instancedata.html).
+Here, the `aws` provider will be looking for a valid JSON object:
+
+    {
+      "hostname": "ec2-184-72-8-21.us-west-1.compute.amazonaws.com",
+      "subdomain": "mock.livetribe.org.",
+      "name": "travis"
+    }
+
+If any of the above parameters are not specified in the user data they must be
+provided on the command line.
+
+### AWS Policies
+
+The AWS security policy for the user must allow for the reading of the list of
+zones and for the modification of the zone onto which `CNAME` records will be
+added.  The following represents the minimum policy which seems to work:
+
+    {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Action": [
+            "route53:Get*",
+            "route53:List*"
+          ],
+          "Resource": [
+            "*"
+          ]
+        },
+        {
+          "Action": [
+            "route53:ChangeResourceRecordSets"
+          ],
+          "Resource": [
+            "arn:aws:route53:::hostedzone/YOURHOSTEDZONEID"
+          ],
+          "Effect": "Allow"
+        }
+      ]
+    }
+
+Where `YOURHOSTEDZONEID` needs to be replaced with the zone id of your Amazon
+Route 53 zone.  The first policy statement allows for the scanning of zones and
+the second policy allows for the modification of a specific zone.
 
 ## Contributing
 
