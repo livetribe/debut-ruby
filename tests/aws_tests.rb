@@ -87,37 +87,11 @@ class TestAws < MiniTest::Unit::TestCase
   end
 
   def test_missing_name
-    Excon.defaults[:mock] = true
-
-    aws = LiveTribe::Debut::AWS::new({:provider => :aws,
-                                      :aws_access_key_id => ENV['AWS_ACCESS_KEY'],
-                                      :aws_secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']})
-    aws.name = LiveTribe::Debut::Debutante::USE_ENVIRONMENT
-    aws.subdomain = LiveTribe::Debut::Debutante::USE_ENVIRONMENT
-
-    user_data = {:subdomain => 'test_subdomain'}
-    Excon.stub({:method => :get, :path => '/latest/user-data'}, {:status => 200, :body => Fog::JSON.encode(user_data)})
-
-    assert_raises(ArgumentError) {
-      aws.send :collect_name_and_subdomain
-    }
+    check_missing_data({:subdomain => 'test_subdomain'})
   end
 
   def test_missing_subdomain
-    Excon.defaults[:mock] = true
-
-    aws = LiveTribe::Debut::AWS::new({:provider => :aws,
-                                      :aws_access_key_id => ENV['AWS_ACCESS_KEY'],
-                                      :aws_secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']})
-    aws.name = LiveTribe::Debut::Debutante::USE_ENVIRONMENT
-    aws.subdomain = LiveTribe::Debut::Debutante::USE_ENVIRONMENT
-
-    user_data = {:name => 'test_name'}
-    Excon.stub({:method => :get, :path => '/latest/user-data'}, {:status => 200, :body => Fog::JSON.encode(user_data)})
-
-    assert_raises(ArgumentError) {
-      aws.send :collect_name_and_subdomain
-    }
+    check_missing_data({:name => 'test_name'})
   end
 
   def test_public_public_hostname
@@ -152,5 +126,23 @@ class TestAws < MiniTest::Unit::TestCase
     hostname = aws.send :collect_hostname
 
     assert_equal('local_hostname', hostname)
+  end
+
+  protected
+
+  def check_missing_data(user_data)
+    Excon.defaults[:mock] = true
+
+    aws = LiveTribe::Debut::AWS::new({:provider => :aws,
+                                      :aws_access_key_id => ENV['AWS_ACCESS_KEY'],
+                                      :aws_secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']})
+    aws.name = LiveTribe::Debut::Debutante::USE_ENVIRONMENT
+    aws.subdomain = LiveTribe::Debut::Debutante::USE_ENVIRONMENT
+
+    Excon.stub({:method => :get, :path => '/latest/user-data'}, {:status => 200, :body => Fog::JSON.encode(user_data)})
+
+    assert_raises(ArgumentError) {
+      aws.send :collect_name_and_subdomain
+    }
   end
 end
