@@ -164,9 +164,7 @@ module LiveTribe
             path = INSTANCE_PUBLIC_HOSTNAME_PATH
           end
 
-          metadata = Fog::JSON.decode(connection.get(:path => path, :expects => 200).body)
-
-          hostname = metadata['hostname']
+          hostname = connection.get(:path => path, :expects => 200).body
         end
 
         hostname

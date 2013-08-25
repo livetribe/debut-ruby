@@ -103,8 +103,7 @@ class TestAws < MiniTest::Unit::TestCase
     aws.hostname = LiveTribe::Debut::Debutante::USE_ENVIRONMENT
     aws.use_local_hostname = false
 
-    meta_data = {:hostname => 'public_hostname'}
-    Excon.stub({:method => :get, :path => '/latest/meta-data/public-hostname'}, {:status => 200, :body => Fog::JSON.encode(meta_data)})
+    Excon.stub({:method => :get, :path => '/latest/meta-data/public-hostname'}, {:status => 200, :body =>'public_hostname'})
 
     hostname = aws.send :collect_hostname
 
@@ -120,8 +119,7 @@ class TestAws < MiniTest::Unit::TestCase
     aws.hostname = LiveTribe::Debut::Debutante::USE_ENVIRONMENT
     aws.use_local_hostname = true
 
-    meta_data = {:hostname => 'local_hostname'}
-    Excon.stub({:method => :get, :path => '/latest/meta-data/local-hostname'}, {:status => 200, :body => Fog::JSON.encode(meta_data)})
+    Excon.stub({:method => :get, :path => '/latest/meta-data/local-hostname'}, {:status => 200, :body => 'local_hostname'})
 
     hostname = aws.send :collect_hostname
 
