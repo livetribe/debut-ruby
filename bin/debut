@@ -17,6 +17,7 @@
 #
 
 require 'gli'
+require 'debut'
 
 include GLI::App
 
