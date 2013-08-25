@@ -32,7 +32,7 @@ def name
 end
 
 def version
-  Debut::VERSION
+  LiveTribe::Debut::VERSION
 end
 
 def date

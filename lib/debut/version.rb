@@ -14,7 +14,8 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-
-module Debut
-  VERSION = '0.0.1'
+module LiveTribe
+  module Debut
+    VERSION = '0.0.2'
+  end
 end

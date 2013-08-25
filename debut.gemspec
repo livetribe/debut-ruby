@@ -20,27 +20,23 @@ require File.join([File.dirname(__FILE__), 'lib', 'debut', 'version.rb'])
 
 Gem::Specification.new do |s|
   s.name        = 'debut'
-  s.version     = Debut::VERSION
+  s.version     = LiveTribe::Debut::VERSION
   s.date        = '2013-07-14'
   s.summary     = "A simple way to register your cloud instance"
   s.description = "A simple way to register your cloud instance with DNS and other lookup services"
   s.platform    = Gem::Platform::RUBY
   s.license     = 'ASL-2'
   s.authors     = ["LiveTribe - Systems Management Project"]
-  s.email       = 'dev@livetribe.codehaus.org'
+  s.email       = 'livetribe-dev@googlegroups.com'
   s.homepage    = 'http://www.livetribe.org'
 
-  s.files       = %w(
-bin/debut
-lib/debut/aws.rb
-lib/debut/version.rb
-lib/debut.rb
-                  )
+  s.files       = `git ls-files`.split("\n")
+  s.test_files  = `git ls-files -- {test,spec,features}/*`.split("\n")
 
-  s.require_paths << 'lib'
+  s.require_paths = %w[lib]
 
   s.bindir = 'bin'
-  s.executables << 'debut'
+  s.executables = %w[debut]
 
   s.rdoc_options = ["--charset=UTF-8"]
   s.extra_rdoc_files = %w[README.md]

@@ -23,7 +23,7 @@ include GLI::App
 
 program_desc 'Register your cloud instance w/ DNS and other lookup services'
 
-version Debut::VERSION
+version LiveTribe::Debut::VERSION
 
 desc 'Use local hostname'
 switch [:l,:local], :default_value => LiveTribe::Debut::Debutante::USE_LOCAL_HOSTNAME
