@@ -27,6 +27,15 @@ module LiveTribe
       require 'fog'
 
       def initialize(attributes)
+        attributes = attributes.dup
+
+        attributes[:use_iam_profile] = !ENV.include?('AWS_ACCESS_KEY')
+        attributes[:use_iam_profile] = !ENV.include?('AWS_SECRET_ACCESS_KEY')
+
+        if attributes[:use_iam_profile]
+          puts 'Using IAM profile'
+        end
+
         @dns = Fog::DNS.new(attributes)
 
         @hostname = LiveTribe::Debut::Debutante::USE_ENVIRONMENT
