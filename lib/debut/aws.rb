@@ -96,7 +96,8 @@ module LiveTribe
             zone.records.create(
                 :value => hostname,
                 :name => fqdn,
-                :type => 'CNAME'
+                :type => 'CNAME',
+                :ttl => 60
             )
 
             puts "Registered hostname #{hostname} at #{fqdn}"

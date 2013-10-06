@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    debut (0.0.3)
+    debut (0.0.4)
       fog (>= 1)
       gli (>= 2.7)
 
