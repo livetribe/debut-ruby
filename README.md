@@ -98,3 +98,7 @@ the second policy allows for the modification of a specific zone.
 
 * [livetribe.org](http://www.livetribe.org)
 * [Provider Documentation](http://www.livetribe.org/about/Debut-Provider)
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/livetribe/debut-ruby/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
