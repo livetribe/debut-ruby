@@ -85,13 +85,13 @@ the second policy allows for the modification of a specific zone.
 ## Contributing
 
 * Find something you would like to work on.
-  * Look for anything you can help with in the [issue tracker](https://github.com/livetribe/livetribe-debut/issues).
-  * Look at the [code quality metrics](https://codeclimate.com/github/livetribe/livetribe-debut) for anything you can help clean up.
+  * Look for anything you can help with in the [issue tracker](https://github.com/livetribe/debut-ruby/issues).
+  * Look at the [code quality metrics](https://codeclimate.com/github/livetribe/debut-ruby) for anything you can help clean up.
   * Or anything else!
 * Fork the project and do your work in a topic branch.
   * Make sure your changes will work on both Ruby 1.9 and Ruby 2.0
 * Add minitests tests to prove your code works and run all the tests using `bundle exec rake`.
-* Rebase your branch against `livetribe/livetribe-debut` to make sure everything is up to date.
+* Rebase your branch against `livetribe/debut-ruby` to make sure everything is up to date.
 * Commit your changes and send a pull request.
 
 ## Additional Resources
