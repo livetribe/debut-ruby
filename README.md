@@ -2,11 +2,11 @@
 
 LiveTribe Debut
 ===============
-[![Build Status](https://secure.travis-ci.org/livetribe/livetribe-debut.png?branch=master)](http://travis-ci.org/livetribe/livetribe-debut)
+[![Build Status](https://secure.travis-ci.org/livetribe/debut-ruby.png?branch=master)](http://travis-ci.org/livetribe/debut-ruby)
 [![Gem Version](https://fury-badge.herokuapp.com/rb/debut.png)](http://badge.fury.io/rb/debut)
-[![Dependency Status](https://gemnasium.com/livetribe/livetribe-debut.png)](https://gemnasium.com/livetribe/livetribe-debut)
-[![Code Climate](https://codeclimate.com/github/livetribe/livetribe-debut.png)](https://codeclimate.com/github/livetribe/livetribe-debut)
-[![Coverage Status](https://coveralls.io/repos/livetribe/livetribe-debut/badge.png)](https://coveralls.io/r/livetribe/livetribe-debut)
+[![Dependency Status](https://gemnasium.com/livetribe/debut-ruby.png)](https://gemnasium.com/livetribe/debut-ruby)
+[![Code Climate](https://codeclimate.com/repos/53030f3669568039c20034f2/badges/9a71d49078ec0980c966/gpa.png)](https://codeclimate.com/repos/53030f3669568039c20034f2/feed)
+[![Coverage Status](https://coveralls.io/repos/livetribe/debut-ruby/badge.png)](https://coveralls.io/r/livetribe/debut-ruby)
 
 Register your cloud instance w/ DNS and other lookup services.
 
@@ -25,7 +25,7 @@ there is only one Amazon Route 53 provider.  Come join the fun and add one!
     sudo gem install debut
 
 Now, after
-[setting up your Fog credentials]http://fog.io/about/getting_started.html#credentials "Setting up your Fog credentials"),
+[setting up your Fog credentials](http://fog.io/about/getting_started.html#credentials "Setting up your Fog credentials"),
 you are ready to introduce your cloud instance:
 
     $ debut -h ec2-164-62-8-61.us-west-1.compute.amazonaws.com -s mock.livetribe.org. -n travis hello
