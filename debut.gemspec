@@ -21,7 +21,7 @@ require File.join([File.dirname(__FILE__), 'lib', 'debut', 'version.rb'])
 Gem::Specification.new do |s|
   s.name        = 'debut'
   s.version     = LiveTribe::Debut::VERSION
-  s.date        = '2013-08-24'
+  s.date        = '2015-11-26'
   s.summary     = "A simple way to register your cloud instance"
   s.description = "A simple way to register your cloud instance with DNS and other lookup services"
   s.platform    = Gem::Platform::RUBY
