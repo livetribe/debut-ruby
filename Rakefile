@@ -84,8 +84,8 @@ namespace :release do
       puts 'You must be on the master branch to release!'
       exit!
     end
-    if `git tag` =~ /^\* v#{version}$/
-      puts "Tag v#{version} already exists!"
+    if `git tag` =~ /^\* #{version}$/
+      puts "Tag #{version} already exists!"
       exit!
     end
   end
@@ -104,12 +104,12 @@ end
 
 task :git_mark_release do
   sh "git commit --allow-empty -a -m 'Release #{version}'"
-  sh "git tag v#{version}"
+  sh "git tag #{version}"
 end
 
 task :git_push_release do
   sh 'git push origin master'
-  sh "git push origin v#{version}"
+  sh "git push origin #{version}"
 end
 
 task :gem_push do
