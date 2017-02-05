@@ -41,10 +41,10 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--charset=UTF-8"]
   s.extra_rdoc_files = %w[README.md]
 
-  s.add_dependency('fog', '>=1')
-  s.add_dependency('gli', '>=2.7')
+  s.add_dependency('fog', '~> 1')
+  s.add_dependency('gli', '~> 2.7')
 
-  s.add_development_dependency('minitest')
-  s.add_development_dependency('rake')
+  s.add_development_dependency('minitest', '~> 5')
+  s.add_development_dependency('rake', '~> 12')
 
 end
