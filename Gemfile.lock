@@ -2,8 +2,8 @@ PATH
   remote: .
   specs:
     debut (0.0.8)
-      fog (>= 1)
-      gli (>= 2.7)
+      fog (~> 1)
+      gli (~> 2.7)
 
 GEM
   remote: https://rubygems.org/
@@ -179,8 +179,8 @@ PLATFORMS
 DEPENDENCIES
   coveralls
   debut!
-  minitest
-  rake
+  minitest (~> 5)
+  rake (~> 12)
 
 BUNDLED WITH
    1.14.3
