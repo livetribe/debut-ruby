@@ -25,7 +25,7 @@ Gem::Specification.new do |s|
   s.summary     = "A simple way to register your cloud instance"
   s.description = "A simple way to register your cloud instance with DNS and other lookup services"
   s.platform    = Gem::Platform::RUBY
-  s.license     = 'ASL-2'
+  s.license     = 'Apache-2.0'
   s.authors     = ["LiveTribe - Systems Management Project"]
   s.email       = 'livetribe-dev@googlegroups.com'
   s.homepage    = 'http://www.livetribe.org'
